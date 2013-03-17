@@ -21,8 +21,9 @@ public class TransactionServiceEndpoint extends Controller {
     
     public static Result getTransactions() {
     	List<Transaction> txns = new ArrayList<Transaction>();
-    	txns.add(new Transaction("1", "Transaction 1"));
-    	txns.add(new Transaction("2", "Transaction 2"));
+    	for (int i = 1; i <= 10; i++) {
+    		txns.add(new Transaction("" + i, "Transaction " + i));
+    	}    	
     	return ok(toJson(txns));
     }
   
