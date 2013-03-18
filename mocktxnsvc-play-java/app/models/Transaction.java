@@ -1,17 +1,46 @@
 package models;
 
+import java.util.Collections;
+import java.util.Map;
+
 public class Transaction {
 	
-	public String id;
-	public String text;
+	private String id;
+	private String tenantId;
+	private Map<String, ColumnValue<? extends Object>> columns;
 	
 	public Transaction() {
-		
+		this("default ID", "default Tenant", Collections.<String, ColumnValue<?>> emptyMap());
 	}
 	
-	public Transaction(String id, String text) {
+	public Transaction(String id, String tenantId, Map<String, ColumnValue<? extends Object>> columns) {
+		setId(id);
+		setTenantId(tenantId);
+		setColumns(columns);
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
 		this.id = id;
-		this.text = text;
+	}
+
+	public String getTenantId() {
+		return tenantId;
+	}
+
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
+
+	public Map<String, ColumnValue<? extends Object>> getColumns() {
+		return columns;
+	}
+
+	public void setColumns(Map<String, ColumnValue<? extends Object>> columns) {
+		this.columns = columns;
 	}
 
 }
