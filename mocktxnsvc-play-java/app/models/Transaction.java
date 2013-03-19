@@ -2,28 +2,29 @@ package models;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.UUID;
 
 public class Transaction {
 	
-	private String id;
+	private UUID id;
 	private String tenantId;
 	private Map<String, ColumnValue<? extends Object>> columns;
 	
 	public Transaction() {
-		this("default ID", "default Tenant", Collections.<String, ColumnValue<?>> emptyMap());
+		this(UUID.randomUUID(), "default Tenant", Collections.<String, ColumnValue<?>> emptyMap());
 	}
 	
-	public Transaction(String id, String tenantId, Map<String, ColumnValue<? extends Object>> columns) {
+	public Transaction(UUID id, String tenantId, Map<String, ColumnValue<? extends Object>> columns) {
 		setId(id);
 		setTenantId(tenantId);
 		setColumns(columns);
 	}
 
-	public String getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

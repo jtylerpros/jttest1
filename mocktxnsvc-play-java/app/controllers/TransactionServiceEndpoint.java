@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import models.ColumnValue;
 import models.Transaction;
@@ -16,10 +17,10 @@ import play.mvc.Result;
 
 public class TransactionServiceEndpoint extends Controller {
     
-    public static Result getTransactionById(String id) {
+    public static Result getTransactionById(String tenant, String id) {
     	Transaction txn = new Transaction();
-    	txn.setId(id);
-    	txn.setTenantId("This is transaction(" + id + ")");
+    	txn.setId(UUID.randomUUID());
+    	txn.setTenantId(tenant);
     	Map<String, ColumnValue<? extends Object>> columns = new HashMap<String, ColumnValue<? extends Object>>();
     	columns.put("revenue", new ColumnValue<Integer>(Integer.class, 500, Arrays.asList("revenue", "measure")));
     	columns.put("margin pct", new ColumnValue<Integer>(Integer.class, 8, Arrays.asList("margin", "measure")));
@@ -29,10 +30,10 @@ public class TransactionServiceEndpoint extends Controller {
     	return ok(toJson(txn));
     }
     
-    public static Result getTransactions() {
+    public static Result getTransactions(String tenant) {
     	List<Transaction> txns = new ArrayList<Transaction>();
     	for (int i = 1; i <= 10; i++) {
-    		Transaction txn = new Transaction(String.valueOf(i), "Tenant1", null);
+    		Transaction txn = new Transaction(UUID.randomUUID(), tenant, null);
     		Map<String, ColumnValue<? extends Object>> columns = new HashMap<String, ColumnValue<? extends Object>>();
         	columns.put("revenue", new ColumnValue<Integer>(Integer.class, (int) (Math.random() * 1500), Arrays.asList("revenue", "measure")));
         	columns.put("margin pct", new ColumnValue<Integer>(Integer.class, (int) (Math.random() * 100), Arrays.asList("margin", "measure")));
@@ -43,8 +44,7 @@ public class TransactionServiceEndpoint extends Controller {
     	}
     	ColumnValue<? extends Object> columnValue = txns.get(0).getColumns().get("revenue");
 		Integer revenue = (Integer) columnValue.getValueAsType();
-		Integer revenueAsObject = columnValue.getType().cast(columnValue.getValue());
-		Logger.info("type of revenueAsObject is " + revenueAsObject.getClass().getName() + " and value is " + revenueAsObject);
+		Logger.info("type of revenue is " + revenue.getClass().getName() + " and value is " + revenue);
     	
     	return ok(toJson(txns));
     }
