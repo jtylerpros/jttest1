@@ -17,10 +17,10 @@ import play.mvc.Result;
 
 public class TransactionServiceEndpoint extends Controller {
     
-    public static Result getTransactionById(String tenant, String id) {
+    public static Result getTransactionById(String id) {
     	Transaction txn = new Transaction();
     	txn.setId(UUID.randomUUID());
-    	txn.setTenantId(tenant);
+    	txn.setTenantId("tenant");
     	Map<String, ColumnValue<? extends Object>> columns = new HashMap<String, ColumnValue<? extends Object>>();
     	columns.put("revenue", new ColumnValue<Integer>(Integer.class, 500, Arrays.asList("revenue", "measure")));
     	columns.put("margin pct", new ColumnValue<Integer>(Integer.class, 8, Arrays.asList("margin", "measure")));
@@ -30,10 +30,10 @@ public class TransactionServiceEndpoint extends Controller {
     	return ok(toJson(txn));
     }
     
-    public static Result getTransactions(String tenant) {
+    public static Result getTransactions() {
     	List<Transaction> txns = new ArrayList<Transaction>();
     	for (int i = 1; i <= 10; i++) {
-    		Transaction txn = new Transaction(UUID.randomUUID(), tenant, null);
+    		Transaction txn = new Transaction(UUID.randomUUID(), "tenant", null);
     		Map<String, ColumnValue<? extends Object>> columns = new HashMap<String, ColumnValue<? extends Object>>();
         	columns.put("revenue", new ColumnValue<Integer>(Integer.class, (int) (Math.random() * 1500), Arrays.asList("revenue", "measure")));
         	columns.put("margin pct", new ColumnValue<Integer>(Integer.class, (int) (Math.random() * 100), Arrays.asList("margin", "measure")));
